@@ -5,6 +5,7 @@
              version="2.2">
     <persistence-unit name="pu">
         <class>entity.Person</class>
+        <class>entity.Address</class>
 
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/demo?serverTimezone=Europe/Copenhagen"/>

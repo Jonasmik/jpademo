@@ -1,15 +1,18 @@
 package entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Person {
+public class Person implements Serializable {
     @Column(name = "ID", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long p_id;
     private String name;
     private int age;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address address;
 
     public Person() {
     }
@@ -19,12 +22,8 @@ public class Person {
         this.age = age;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Long getP_id() {
+        return p_id;
     }
 
     public String getName() {
@@ -41,5 +40,16 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        if(address != null){
+            address.setPerson(this);
+        }
     }
 }
