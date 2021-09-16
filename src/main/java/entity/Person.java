@@ -2,6 +2,8 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Person implements Serializable {
@@ -14,12 +16,27 @@ public class Person implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    List<Fee> fees;
+
     public Person() {
     }
 
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
+        this.fees = new ArrayList<>();
+    }
+
+    public List<Fee> getFees() {
+        return fees;
+    }
+
+    public void AddFee(Fee fee) {
+        this.fees.add(fee);
+        if(fee != null) {
+            fee.setPerson(this);
+        }
     }
 
     public Long getP_id() {
