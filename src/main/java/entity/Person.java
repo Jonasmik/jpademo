@@ -19,6 +19,9 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     List<Fee> fees;
 
+    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    List<SwimStyle> styles;
+
     public Person() {
     }
 
@@ -26,6 +29,7 @@ public class Person implements Serializable {
         this.name = name;
         this.age = age;
         this.fees = new ArrayList<>();
+        this.styles = new ArrayList<>();
     }
 
     public List<Fee> getFees() {
@@ -36,6 +40,20 @@ public class Person implements Serializable {
         this.fees.add(fee);
         if(fee != null) {
             fee.setPerson(this);
+        }
+    }
+
+    public void addSwimStyle(SwimStyle style){
+        if (style != null) {
+            this.styles.add(style);
+            style.getPersons().add(this);
+        }
+    }
+
+    public void removeSwimStyle(SwimStyle swimStyle){
+        if (swimStyle != null){
+            styles.remove(swimStyle);
+            swimStyle.getPersons().remove(this);
         }
     }
 
